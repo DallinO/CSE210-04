@@ -57,7 +57,7 @@ namespace Unit04.Game.Directing
         /// <param name="cast">The given cast.</param>
         private void GetInputs(Cast cast)
         {
-            Actor robot = cast.GetFirstActor("robot");
+            Actor robot = cast.GetFirstActor("player");
             Point velocity = keyboardService.GetDirection();
             robot.SetVelocity(velocity);
         }
@@ -69,7 +69,7 @@ namespace Unit04.Game.Directing
         private void DoUpdates(Cast cast)
         {
             Actor banner = cast.GetFirstActor("banner");
-            Actor robot = cast.GetFirstActor("robot");
+            Actor robot = cast.GetFirstActor("player");
             List<Actor> actor = cast.GetActors("actor");
             Actor gameoverdisplay = cast.GetFirstActor("gameover");
 
