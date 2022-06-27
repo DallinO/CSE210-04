@@ -19,6 +19,7 @@ namespace Unit04.Game.Directing
         Color color = new Color(0, 0, 0);
         Random random = new Random();
         int score = 0;
+        bool gameover = false;
 
         /// <summary>
         /// Constructs a new instance of Director using the given KeyboardService and VideoService.
@@ -41,7 +42,10 @@ namespace Unit04.Game.Directing
             while (videoService.IsWindowOpen())
             {
                 GetInputs(cast);
-                DoUpdates(cast);
+                if (gameover == false)
+                {
+                    DoUpdates(cast);
+                }
                 DoOutputs(cast);
             }
             videoService.CloseWindow();
@@ -67,6 +71,7 @@ namespace Unit04.Game.Directing
             Actor banner = cast.GetFirstActor("banner");
             Actor robot = cast.GetFirstActor("robot");
             List<Actor> actor = cast.GetActors("actor");
+            Actor gameoverdisplay = cast.GetFirstActor("gameover");
 
             banner.SetText("POINTS: " + score);
             int maxX = videoService.GetWidth();
@@ -77,7 +82,7 @@ namespace Unit04.Game.Directing
                 x.MoveNext(maxX, maxY);
                 if (x.GetText() == "O")
                 {
-                    x.SetVelocity(new Point(0, 2));
+                    x.SetVelocity(new Point(0, 3));
                 }
                 if (x.GetText() == "*")
                 {
@@ -92,6 +97,12 @@ namespace Unit04.Game.Directing
                     if (x.GetText() == "*")
                     {
                         score = score + 1;
+                        x.SetText("");
+                    }
+                    if (x.GetText() == "O")
+                    { 
+                        gameoverdisplay.SetText("GAME OVER");
+                        gameover = true;
                     }
                 }
             }

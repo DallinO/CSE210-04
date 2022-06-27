@@ -11,7 +11,7 @@ namespace Unit04
     /// </summary>
     class Program
     {
-        private static int FRAME_RATE = 12;
+        private static int FRAME_RATE = 30;
         private static int MAX_X = 900;
         private static int MAX_Y = 600;
         private static int CELL_SIZE = 15;
@@ -39,6 +39,14 @@ namespace Unit04
             banner.SetPosition(new Point(CELL_SIZE, 0));
             cast.AddActor("banner", banner);
 
+            Actor gameover = new Actor();
+            gameover.SetText("");
+            gameover.SetFontSize(FONT_SIZE);
+            gameover.SetColor(new Color(255, 133, 133));
+            gameover.SetPosition(new Point((MAX_X / 2 - 50), MAX_Y / 2));
+            cast.AddActor("gameover", gameover);
+
+
             // create the robot
             Actor robot = new Actor();
             robot.SetText("#");
@@ -49,17 +57,8 @@ namespace Unit04
 
             // create the Actors
             Random random = new Random();
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 70; i++)
             {
-                string text = "";
-                if (i < 25)
-                {
-                    text = "*";
-                }
-                if (i >= 25)
-                {
-                    text = "O";
-                }
                 int x = random.Next(1, COLS);
                 int y = random.Next(1, ROWS);
                 Point position = new Point(x, y);
@@ -68,12 +67,24 @@ namespace Unit04
                 int r = random.Next(0, 256);
                 int g = random.Next(0, 256);
                 int b = random.Next(0, 256);
-                Color color = new Color(255, 255, 255);
+                Color color = new Color(r, g, b);
+                string text = "";
 
                 Actor actor = new Actor();
+                if (i < 25)
+                {
+                    text = "*";
+                    actor.SetColor(color);
+                    
+                }
+                if (i >= 25)
+                {
+                    text = "O";
+                    actor.SetColor(WHITE);
+                }
+                
                 actor.SetText(text);
                 actor.SetFontSize(FONT_SIZE);
-                actor.SetColor(color);
                 actor.SetPosition(position);
                 cast.AddActor("actor", actor);
             }
